@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news/features/home/data/category_model.dart';
+import 'package:news/features/home/logic/category_model.dart';
 
 class CategoriesItem extends StatelessWidget {
   CategoryModel category;
@@ -14,6 +14,7 @@ class CategoriesItem extends StatelessWidget {
         'assets/images/${category.imageName}.png',
         height: height * 0.25,
         width: double.infinity,
+        fit: BoxFit.fill,
       ),
     );
   }

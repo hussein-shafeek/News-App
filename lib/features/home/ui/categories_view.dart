@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:news/features/home/data/category_model.dart';
-import 'package:news/features/home/ui/categories_item.dart';
+import 'package:news/features/home/logic/category_model.dart';
+import 'package:news/features/home/data/categories_item.dart';
 
 class CategoriesView extends StatelessWidget {
   const CategoriesView({super.key});

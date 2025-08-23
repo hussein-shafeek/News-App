@@ -4,7 +4,7 @@ import 'package:news/core/theme/app_colors.dart';
 class AppTheme {
   // ignore: non_constant_identifier_names
   static ThemeData CustomeDarkTheme = ThemeData(
-    scaffoldBackgroundColor: AppColors.backgroundDark,
+    scaffoldBackgroundColor: AppColors.backgroundDark.withValues(alpha: 0.5),
 
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.black,
@@ -64,12 +64,17 @@ class AppTheme {
       titleMedium: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: AppColors.black,
+        color: AppColors.white,
       ),
       titleSmall: TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         color: AppColors.white,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        color: AppColors.gray,
       ),
       displaySmall: TextStyle(
         fontSize: 36,
