@@ -18,11 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            selectedCategory == null ? 'Home' : selectedCategory!.name,
-          ),
-        ),
+        centerTitle: true,
+        title: Text(selectedCategory == null ? 'Home' : selectedCategory!.name),
       ),
       drawer: HomeDrawer(onGoToHome: resetSelectedCategory),
       body: selectedCategory == null

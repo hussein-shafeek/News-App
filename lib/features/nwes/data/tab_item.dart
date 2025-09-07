@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news/features/nwes/logic/source_model.dart';
+import 'package:news/core/models/sources_response/source.dart';
 
 class TabItem extends StatelessWidget {
-  SourceModel source;
+  Source source;
   bool isSelected;
   TabItem({required this.isSelected, required this.source});
 
@@ -12,7 +12,7 @@ class TabItem extends StatelessWidget {
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
     return Text(
-      source.name,
+      source.name ?? '',
       style: isSelected ? text.titleMedium : text.titleSmall,
     );
   }
