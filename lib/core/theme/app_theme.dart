@@ -86,6 +86,11 @@ class AppTheme {
         fontWeight: FontWeight.bold,
         color: AppColors.white,
       ),
+      headlineLarge: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        color: AppColors.white,
+      ),
     ),
 
     textButtonTheme: TextButtonThemeData(
