@@ -18,6 +18,7 @@ class NewsView extends StatefulWidget {
 }
 
 class _NewsViewState extends State<NewsView> {
+  Source? selectedSource;
   int currentIndex = 0;
   late Future<SourcesResponse> getSourcesFuture = ApiService.getSources(
     widget.categoryId,
@@ -33,6 +34,7 @@ class _NewsViewState extends State<NewsView> {
           return ErrorIndicator();
         } else {
           List<Source> sources = snapshot.data?.sources ?? [];
+
           return Column(
             children: [
               DefaultTabController(
@@ -71,7 +73,6 @@ class _NewsViewState extends State<NewsView> {
                     } else {
                       List<News> newsList = snapshot.data?.newsList ?? [];
                       return ListView.separated(
-                        padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                         itemBuilder: (_, index) => NewsItem(newsList[index]),
                         separatorBuilder: (_, _) => SizedBox(height: 16),
                         itemCount: newsList.length,
