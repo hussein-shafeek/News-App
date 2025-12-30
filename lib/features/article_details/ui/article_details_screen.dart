@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news/core/models/news_response/news.dart';
+import 'package:news/features/news/data/models/news_response/news.dart';
 import 'package:intl/intl.dart';
-import 'package:news/core/theme/app_colors.dart';
+import 'package:news/Shared/theme/app_colors.dart';
 import 'package:news/features/article_details/logic/clean_text.dart';
 
 class ArticleDetailsScreen extends StatelessWidget {
@@ -20,27 +20,27 @@ class ArticleDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // العنوان
+            // Title
             Text(article.title ?? '', style: text.headlineLarge),
             const SizedBox(height: 8),
 
-            // الوصف
+            // Description
             if (article.description != null)
               Text(article.description!, style: text.labelSmall),
             const SizedBox(height: 16),
 
-            // المؤلف والتاريخ
+            // Author and Date
             RichText(
               text: TextSpan(
-                style: text.labelSmall, // ستايل الأساس (By:)
+                style: text.labelSmall,
                 children: [
-                  const TextSpan(text: "By: "), // كلمة By بنفس اللون العادي
+                  const TextSpan(text: "By: "),
                   TextSpan(
-                    text: article.author ?? "Unknown", // اسم الكاتب
+                    text: article.author ?? "Unknown",
                     style: text.labelSmall?.copyWith(
-                      color: Colors.blue, // أزرق
+                      color: Colors.blue,
                       decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold, // تحته خط
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
@@ -56,7 +56,7 @@ class ArticleDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // صورة المقال
+            // Image
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
@@ -67,9 +67,9 @@ class ArticleDetailsScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // المحتوى
+            // Content
             if (article.content != null)
               Text(cleanText(article.content), style: text.titleMedium),
           ],

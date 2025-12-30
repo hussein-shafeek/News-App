@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news/core/models/news_response/news.dart';
-import 'package:news/core/theme/app_colors.dart';
+import 'package:news/features/news/data/models/news_response/news.dart';
+import 'package:news/Shared/theme/app_colors.dart';
 import 'package:news/features/article_details/ui/article_details_screen.dart';
-import 'package:timeago/timeago.dart';
 
 class NewsPreviewBottomSheet extends StatelessWidget {
   final News article;
@@ -19,7 +18,6 @@ class NewsPreviewBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // صورة الخبر
           if (article.urlToImage != null)
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -42,7 +40,7 @@ class NewsPreviewBottomSheet extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // زرار التفاصيل
+          // View Full Article Button
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.black,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news/core/routes/routes.dart';
-import 'package:news/core/theme/app_theme.dart';
-import 'package:news/features/home/ui/home_screen.dart';
+import 'package:news/Shared/routes/routes.dart';
+import 'package:news/Shared/theme/app_theme.dart';
+import 'package:news/features/home/view/screens/home_screen.dart';
 
 void main() {
   runApp(NewsApp());
