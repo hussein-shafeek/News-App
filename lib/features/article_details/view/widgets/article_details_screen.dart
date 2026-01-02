@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news/features/news/data/models/news_response/news.dart';
 import 'package:intl/intl.dart';
-import 'package:news/Shared/theme/app_colors.dart';
-import 'package:news/features/article_details/logic/clean_text.dart';
+import 'package:news/Shared/utils/clean_text.dart';
 
 class ArticleDetailsScreen extends StatelessWidget {
   final News article;
@@ -71,7 +70,7 @@ class ArticleDetailsScreen extends StatelessWidget {
 
             // Content
             if (article.content != null)
-              Text(cleanText(article.content), style: text.titleMedium),
+              Text(CleanText.clean(article.content), style: text.titleMedium),
           ],
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news/features/news/data/models/news_response/news.dart';
 import 'package:news/Shared/theme/app_colors.dart';
-import 'package:news/features/article_details/ui/news_preview_bottom_sheet.dart';
+import 'package:news/features/article_details/view/widgets/news_preview_bottom_sheet.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NewsItem extends StatelessWidget {

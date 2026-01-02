@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:news/features/news/data/models/news_response/news.dart';
 import 'package:news/features/news/view_model/news_view_model.dart';
 import 'package:news/features/sources/data/models/sources_response/source.dart';
-import 'package:news/Shared/services/api/api_service.dart';
 import 'package:news/Shared/theme/app_colors.dart';
 import 'package:news/Shared/widgets/error_indicator.dart';
 import 'package:news/Shared/widgets/loading_indicator.dart';
@@ -20,21 +19,12 @@ class NewsView extends StatefulWidget {
 }
 
 class _NewsViewState extends State<NewsView> {
-  // Source? selectedSource; // Unused
   int currentIndex = 0;
-  SourcesViewModel sourcesViewModel = SourcesViewModel();
-  NewsViewModel newsViewModel = NewsViewModel();
-
-  @override
-  void initState() {
-    super.initState();
-    sourcesViewModel.getSources(widget.categoryId);
-  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => sourcesViewModel,
+      create: (_) => SourcesViewModel()..getSources(widget.categoryId),
       child: Consumer<SourcesViewModel>(
         builder: (_, viewModel, _) {
           if (viewModel.isLoading) {
@@ -46,6 +36,7 @@ class _NewsViewState extends State<NewsView> {
             if (sources.isEmpty) {
               return const Center(child: Text("No sources found."));
             }
+
             return Column(
               children: [
                 DefaultTabController(
@@ -76,7 +67,7 @@ class _NewsViewState extends State<NewsView> {
                   child: ChangeNotifierProvider(
                     key: ValueKey(sources[currentIndex].id),
                     create: (_) =>
-                        newsViewModel..getNews(sources[currentIndex].id!),
+                        NewsViewModel()..getNews(sources[currentIndex].id!),
                     child: Consumer<NewsViewModel>(
                       builder: (context, viewModel, _) {
                         if (viewModel.isLoading) {

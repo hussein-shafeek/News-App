@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news/features/article_details/view/widgets/article_details_screen.dart';
 import 'package:news/features/news/data/models/news_response/news.dart';
 import 'package:news/Shared/theme/app_colors.dart';
-import 'package:news/features/article_details/ui/article_details_screen.dart';
 
 class NewsPreviewBottomSheet extends StatelessWidget {
   final News article;

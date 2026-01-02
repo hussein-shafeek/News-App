@@ -58,7 +58,6 @@ class NewsSearchDelegate extends SearchDelegate<CategoryModel?> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) {
-      // لا تعرض أي شيء إذا كان الاستعلام فارغًا
       return const SizedBox.shrink();
     }
 
