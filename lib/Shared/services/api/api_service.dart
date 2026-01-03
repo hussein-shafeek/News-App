@@ -26,12 +26,10 @@ class ApiService {
     return NewsResponse.fromJson(json);
   }
 
-  // الدالة للبحث عن أخبار في فئة معينة
   static Future<NewsResponse> searchNewsByCategory(
     String query,
     String category,
   ) async {
-    // هات المصادر الخاصة بالكاتيجوري
     final sourcesResponse = await getSources(category);
     final sources = sourcesResponse.sources ?? [];
     if (sources.isEmpty) {
@@ -41,19 +39,15 @@ class ApiService {
     final sourceIds = sources.map((s) => s.id).whereType<String>().toList();
     final joinedSources = sourceIds.join(',');
 
-    //  Dynamic query: نوسع الكلمة
     String expandedQuery = query;
     if (query.trim().split(" ").length == 1) {
-      // كلمة واحدة → جرب OR
       expandedQuery =
           "$query OR ${query[0].toUpperCase()}${query.substring(1)}";
     } else {
-      // أكتر من كلمة → ابعتها زي ما هي + OR نسخة Title Case
       expandedQuery =
           "$query OR ${query.split(' ').map((w) => w[0].toUpperCase() + w.substring(1)).join(' ')}";
     }
 
-    //  عربي
     final uriAr =
         Uri.https(ApiConstant.baseURL, ApiConstant.everythingEndpoint, {
           'apiKey': ApiConstant.apiKey,
@@ -84,7 +78,6 @@ class ApiService {
       if (dataAr['articles'] != null && dataAr['articles'].isNotEmpty) {
         allArticles.addAll(dataAr['articles']);
       } else {
-        // 🔥 fallback: هات أخبار بالعربي من غير sources
         final fallbackUriAr =
             Uri.https(ApiConstant.baseURL, ApiConstant.everythingEndpoint, {
               'apiKey': ApiConstant.apiKey,
@@ -101,13 +94,11 @@ class ApiService {
       }
     }
 
-    //  معالجة الإنجليزي
     if (responseEn.statusCode == 200) {
       final Map<String, dynamic> dataEn = json.decode(responseEn.body);
       allArticles.addAll(dataEn['articles']);
     }
 
-    // فلترة Dynamic: نتأكد المقال فيه الكلمة
     allArticles = allArticles.where((article) {
       final title = (article['title'] ?? "").toString().toLowerCase();
       final desc = (article['description'] ?? "").toString().toLowerCase();
@@ -122,7 +113,6 @@ class ApiService {
     });
   }
 
-  // **تمت إضافة هذه الدالة للبحث العام عن الأخبار**
   static Future<NewsResponse> searchNews(String query) async {
     final uriAr =
         Uri.https(ApiConstant.baseURL, ApiConstant.everythingEndpoint, {
