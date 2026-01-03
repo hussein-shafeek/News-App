@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/features/news/data/models/news_response/news.dart';
+import 'package:news/features/news/view_model/news_states.dart';
 import 'package:news/features/news/view_model/news_view_model.dart';
 import 'package:news/features/sources/data/models/sources_response/source.dart';
 import 'package:news/Shared/theme/app_colors.dart';
 import 'package:news/Shared/widgets/error_indicator.dart';
 import 'package:news/Shared/widgets/loading_indicator.dart';
 import 'package:news/features/news/view/widgets/news_item.dart';
+import 'package:news/features/sources/view_model/sources_states.dart';
 import 'package:news/features/sources/view_model/sources_view_model.dart';
 import 'package:news/features/sources/view/widgets/tab_item.dart';
-import 'package:provider/provider.dart';
 
 class NewsView extends StatefulWidget {
   final String categoryId;
@@ -23,20 +25,16 @@ class _NewsViewState extends State<NewsView> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return BlocProvider(
       create: (_) => SourcesViewModel()..getSources(widget.categoryId),
-      child: Consumer<SourcesViewModel>(
-        builder: (_, viewModel, _) {
-          if (viewModel.isLoading) {
+      child: BlocBuilder<SourcesViewModel, SourcesStates>(
+        builder: (context, state) {
+          if (state is SourcesLoading) {
             return const LoadingIndicator();
-          } else if (viewModel.errorMessage != null) {
-            return ErrorIndicator(viewModel.errorMessage!);
-          } else {
-            List<Source> sources = viewModel.sources;
-            if (sources.isEmpty) {
-              return const Center(child: Text("No sources found."));
-            }
-
+          } else if (state is SourcesError) {
+            return ErrorIndicator(state.message);
+          } else if (state is SourcesSuccess) {
+            List<Source> sources = state.sources;
             return Column(
               children: [
                 DefaultTabController(
@@ -64,18 +62,18 @@ class _NewsViewState extends State<NewsView> {
                   ),
                 ),
                 Expanded(
-                  child: ChangeNotifierProvider(
+                  child: BlocProvider(
                     key: ValueKey(sources[currentIndex].id),
                     create: (_) =>
                         NewsViewModel()..getNews(sources[currentIndex].id!),
-                    child: Consumer<NewsViewModel>(
-                      builder: (context, viewModel, _) {
-                        if (viewModel.isLoading) {
+                    child: BlocBuilder<NewsViewModel, NewsStates>(
+                      builder: (context, state) {
+                        if (state is NewsLoading) {
                           return const LoadingIndicator();
-                        } else if (viewModel.errorMessage != null) {
-                          return ErrorIndicator(viewModel.errorMessage!);
-                        } else {
-                          List<News> newsList = viewModel.newsList;
+                        } else if (state is NewsError) {
+                          return ErrorIndicator(state.message);
+                        } else if (state is NewsSuccess) {
+                          List<News> newsList = state.newsList;
                           return ListView.separated(
                             itemBuilder: (_, index) =>
                                 NewsItem(newsList[index]),
@@ -83,6 +81,8 @@ class _NewsViewState extends State<NewsView> {
                                 const SizedBox(height: 16),
                             itemCount: newsList.length,
                           );
+                        } else {
+                          return const Center(child: Text("No news found."));
                         }
                       },
                     ),
@@ -90,6 +90,8 @@ class _NewsViewState extends State<NewsView> {
                 ),
               ],
             );
+          } else {
+            return const Center(child: Text("No sources found."));
           }
         },
       ),
